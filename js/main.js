@@ -68,10 +68,9 @@ jQuery(document).ready(function ($) {
     $("#mobile-nav, #mobile-nav-toggle").hide();
   }
 
-  // Smoth scroll on page hash links
+  // Smooth scroll on page hash links
   $('a[href*="#"]:not([href="#"])').on('click', function () {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-
       var target = $(this.hash);
       if (target.length) {
         var top_space = 0;
@@ -103,16 +102,13 @@ jQuery(document).ready(function ($) {
     }
   });
 
-  // Porfolio filter
+  // Portfolio filter
   $("#portfolio-flters li").click(function () {
     $("#portfolio-flters li").removeClass('filter-active');
     $(this).addClass('filter-active');
-
     var selectedFilter = $(this).data("filter");
     $("#portfolio-wrapper").fadeTo(100, 0);
-
     $(".portfolio-item").fadeOut().css('transform', 'scale(0)');
-
     setTimeout(function () {
       $(selectedFilter).fadeIn(100).css('transform', 'scale(1)');
       $("#portfolio-wrapper").fadeTo(300, 1);
@@ -125,6 +121,38 @@ jQuery(document).ready(function ($) {
     time: 1000
   });
 
-  // custom code
+  // Custom code for Read More/Read Less
+  $('.read-more').click(function () {
+    var $fullDescription = $(this).closest('.box').find('.full-description');
+    // Check if the description is visible
+    if ($fullDescription.is(':visible')) {
+      $fullDescription.slideUp(); // Hide the full description
+      $(this).text('Read More'); // Change the text back to 'Read More'
+    } else {
+      $fullDescription.slideDown(); // Show the full description
+      $(this).text('Read Less'); // Change the text to 'Read Less'
+    }
+  });
 
+});
+document.addEventListener('DOMContentLoaded', function() {
+  const readMoreButtons = document.querySelectorAll('.read-more-btn');
+  
+  readMoreButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const description = this.parentElement;
+      const shortDesc = description.querySelector('.short-desc');
+      const fullDesc = description.querySelector('.full-desc');
+      
+      if (fullDesc.style.display === 'none') {
+        shortDesc.style.display = 'none';
+        fullDesc.style.display = 'block';
+        this.textContent = 'Read Less';
+      } else {
+        shortDesc.style.display = 'block';
+        fullDesc.style.display = 'none';
+        this.textContent = 'Read More';
+      }
+    });
+  });
 });
