@@ -153,3 +153,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+document.addEventListener('DOMContentLoaded', function() {
+  // Add smooth scrolling to all links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  // Highlight the active menu item on scroll
+  const sections = document.querySelectorAll('section');
+  const navLi = document.querySelectorAll('nav ul li');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLi.forEach(li => {
+      li.classList.remove('menu-active');
+      if (li.querySelector('a').getAttribute('href').includes(current)) {
+        li.classList.add('menu-active');
+      }
+    });
+  });
+});
