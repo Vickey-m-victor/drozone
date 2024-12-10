@@ -122,36 +122,33 @@ jQuery(document).ready(function ($) {
   });
 
   // Custom code for Read More/Read Less
-  $('.read-more').click(function () {
-    var $fullDescription = $(this).closest('.box').find('.full-description');
-    // Check if the description is visible
-    if ($fullDescription.is(':visible')) {
-      $fullDescription.slideUp(); // Hide the full description
-      $(this).text('Read More'); // Change the text back to 'Read More'
-    } else {
-      $fullDescription.slideDown(); // Show the full description
-      $(this).text('Read Less'); // Change the text to 'Read Less'
-    }
-  });
+
 
 });
+
 document.addEventListener('DOMContentLoaded', function() {
-  const readMoreButtons = document.querySelectorAll('.read-more-btn');
-  
-  readMoreButtons.forEach(button => {
+  var readMoreButtons = document.querySelectorAll('.read-more-btn');
+  var modals = document.querySelectorAll('.modal');
+  var modalCloseButtons = document.querySelectorAll('.modal-close');
+
+  readMoreButtons.forEach(function(button) {
     button.addEventListener('click', function() {
-      const description = this.parentElement;
-      const shortDesc = description.querySelector('.short-desc');
-      const fullDesc = description.querySelector('.full-desc');
-      
-      if (fullDesc.style.display === 'none') {
-        shortDesc.style.display = 'none';
-        fullDesc.style.display = 'block';
-        this.textContent = 'Read Less';
-      } else {
-        shortDesc.style.display = 'block';
-        fullDesc.style.display = 'none';
-        this.textContent = 'Read More';
+      var targetModal = document.querySelector(button.getAttribute('data-target'));
+      targetModal.style.display = 'block';
+    });
+  });
+
+  modalCloseButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var modal = button.closest('.modal');
+      modal.style.display = 'none';
+    });
+  });
+
+  window.addEventListener('click', function(event) {
+    modals.forEach(function(modal) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
       }
     });
   });
